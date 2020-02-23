@@ -5,18 +5,16 @@ import subprocess
 
 # get todays date in yyyymmdd
 today = datetime.datetime.now().strftime ("%Y%m%d")
-#print(today)
 
 # source and destination locations
 src = r'/home/pi/pi-timolo/media/motion'
 des = r'/home/pi/Documents/garden/' + today
-#print(des)
+
 
 os.mkdir(des)
 
 # move all the files from src to destination 
 srcfiles = os.listdir(src)
-#print(srcfiles)
 
 # copy the files to the new destination...
 for f in srcfiles:
@@ -30,7 +28,6 @@ for f in srcfiles:
 os.chdir(des)
 
 desfiles = sorted(os.listdir(des))
-#print(desfiles)
 
 # create a file containing the contents of the folder
 with open('mylist.txt', 'w') as mylist:
@@ -42,7 +39,3 @@ mergedfilename = today + '.mp4'
 
 # subprocess.run(['ffmpeg','-f', 'concat', '-safe', ' 0', '-i', 'mylist.txt', '-c', 'copy', 'video.mp4'])
 subprocess.run(['ffmpeg','-f', 'concat', '-safe', ' 0', '-i', 'mylist.txt', '-c', 'copy', mergedfilename])
-
-
-
-
