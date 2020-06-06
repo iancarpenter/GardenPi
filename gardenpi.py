@@ -10,39 +10,33 @@ today = datetime.datetime.now().strftime ("%Y%m%d")
 # source and destination locations
 src = r'/home/pi/pi-timolo/media/motion'
 des = r'/home/pi/Documents/garden/' + today
-#print(des)
 
 os.mkdir(des)
 
-# move all the files from src to destination 
-srcfiles = os.listdir(src)
-#print(srcfiles)
+# cd to where the files are 
+os.chdir(src)
 
-# copy the files to the new destination...
-for f in srcfiles:
-    shutil.copy(os.path.join(src,f), des)
+# sort the directory contents by name
+srcfiles = sorted(os.listdir(src))
 
-# then delete them...
-for f in srcfiles:
-    os.remove(os.path.join(src,f))
-
-# cd to where the files have been moved to
-os.chdir(des)
-
-desfiles = sorted(os.listdir(des))
-#print(desfiles)
 
 # create a file containing the contents of the folder
-with open('mylist.txt', 'w') as mylist:
-    for f in desfiles: # need to sort the files by name
-        mylist.write("file './" + f + "'\n")    
+with open('filelist.txt', 'w') as filelist:
+    for f in srcfiles: 
+        filelist.write("file './" + f + "'\n")    
     
-# command to create one mp4 from all the mp4s in the directory
-mergedfilename = today + '.mp4'
+# example filename 20200520.mp4
+videofilename = today + '.mp4'
 
-# subprocess.run(['ffmpeg','-f', 'concat', '-safe', ' 0', '-i', 'mylist.txt', '-c', 'copy', 'video.mp4'])
-subprocess.run(['ffmpeg','-f', 'concat', '-safe', ' 0', '-i', 'mylist.txt', '-c', 'copy', mergedfilename])
+# create one mp4 from all the mp4s in the directory
+subprocess.run(['ffmpeg','-f', 'concat', '-safe', ' 0', '-i', 'filelist.txt', '-c', 'copy', videofilename])
 
+# copy the video to the destination directory
+print("copying video file")
+shutil.copy(os.path.join(src,videofilename), des)
 
-
+# remove all the files from the src directory
+filestodelete = os.listdir(src)
+for f in filestodelete:
+    os.remove(os.path.join(src,f))
 
