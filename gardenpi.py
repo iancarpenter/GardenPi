@@ -18,7 +18,7 @@ os.chdir(src)
 
 # sort the directory contents by name
 srcfiles = sorted(os.listdir(src))
-
+#print(desfiles)
 
 # create a file containing the contents of the folder
 with open('filelist.txt', 'w') as filelist:
@@ -39,4 +39,4 @@ shutil.copy(os.path.join(src,videofilename), des)
 filestodelete = os.listdir(src)
 for f in filestodelete:
     os.remove(os.path.join(src,f))
-
+    
