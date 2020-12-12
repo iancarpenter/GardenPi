@@ -80,6 +80,7 @@ def copy_mp4_file_to_destination(src, videofilename, des ):
     print("copying video file")
     shutil.copy(os.path.join(src,videofilename), des)
 
+
 def delete_source_files(path):
     '''Remove all the files from the src directory
 
@@ -92,10 +93,22 @@ def delete_source_files(path):
         os.remove(os.path.join(path,f))
 
 
-def main():
-    '''
-    '''
+def create_file_name_and_destination_folder():
+    '''Create a filename user that as the name of the
+       folder, change to the directory where the source
+       files are, sort them by name and create a file 
+       containing the src file names
+       
+       Args:
+           None
+    
+       Returns: 
+           File name, 
+           Location of the source video files 
+           Path where the video file will be created. 
 
+    '''
+    
     today = get_todays_date_as_str()
 
     # example filename 20200520.mp4
@@ -115,9 +128,28 @@ def main():
 
     create_filelist(srcfiles)
 
+    return video_file_name, src, des
+
+
+def create_video_file(video_file_name, src, des):
+    '''Call the functions required to create the video file
+       and move it to the expected folder
+    '''    
     create_mp4_file(video_file_name)
     
-    copy_mp4_file_to_destination(src, video_file_name, des )
+    copy_mp4_file_to_destination(src, video_file_name, des)
+    
+
+
+def main():
+    '''Call the functions to create the supporting file and folder 
+       objects then create the video file and finally delete the 
+       source files           
+    '''
+    
+    video_file_name, src, des = create_file_name_and_destination_folder()    
+    
+    create_video_file(video_file_name, src, des)
 
     delete_source_files(src)
 
