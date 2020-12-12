@@ -24,16 +24,16 @@ def get_source_files_path():
     '''Returns the path of where the source files are
        located    
     '''
-    src = r'C:\Users\Ian\Documents\GitHub\GardenPi\TestFilesSrc' # r'/home/pi/pi-timolo/media/motion'
+    src = r'/home/pi/pi-timolo/media/motion'
 
     return src
     
 
-def get_file_destination_path():
+def get_file_destination_path(today):
     '''Returns the path of where the destination file 
        will be saved
     '''    
-    des = r'C:\Users\Ian\Documents\GitHub\GardenPi\TestFilesDes' #r'/home/pi/Documents/garden/' + today
+    des = r'/home/pi/Documents/garden/' + today
 
     return des
 
@@ -103,7 +103,7 @@ def main():
 
     src = get_source_files_path()
     
-    des = get_file_destination_path()
+    des = get_file_destination_path(today)
 
     create_file_destination_directory(des)
 
@@ -124,4 +124,3 @@ def main():
 
 if __name__ == '__main__':
     main() 
-
